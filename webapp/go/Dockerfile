@@ -2,7 +2,10 @@ FROM golang:1.21.0-bookworm
 
 WORKDIR /tmp
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && \
+RUN apt-get update &&\
+    apt-get install -y gnupg2 &&\
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B7B3B788A8D3785C &&\
+    apt-get update && \
     apt-get -y upgrade && \
     apt-get install -y curl wget gcc g++ make sqlite3 locales locales-all && \
     wget -q https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb && \
