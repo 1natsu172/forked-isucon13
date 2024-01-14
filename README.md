@@ -97,6 +97,7 @@ $ make up/go
 
 go以外の環境の起動は `down/{言語実装名}`  および `up/{言語実装名}` で行えます。
 
+ふつうに `docker exec` すると `isucon` ユーザーでログオンするので、tool類導入のためにはrootで入る必要があります。 `docker exec -it -u 0 webapp /bin/bash` でrootログオンできます。
 
 ## ベンチマーカーの実行
 
