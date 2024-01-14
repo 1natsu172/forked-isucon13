@@ -99,6 +99,29 @@ go以外の環境の起動は `down/{言語実装名}`  および `up/{言語実
 
 ふつうに `docker exec` すると `isucon` ユーザーでログオンするので、tool類導入のためにはrootで入る必要があります。 `docker exec -it -u 0 webapp /bin/bash` でrootログオンできます。
 
+### docker環境にもしかすると足りないかもしれないもの
+
+#### sudo
+
+なかったら入れてあったらなにもしないコマンド
+
+```sh
+command -v sudo >/dev/null 2>&1 || { echo >&2 "Installing sudo..."; apt-get update && apt-get install -y sudo; }
+```
+
+#### goランタイム
+
+go以外のwebapp上でgo系のツールを使うなら入れる必要がある
+
+```sh
+wget https://go.dev/dl/go1.21.6.linux-amd64.tar.gz && rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
+```
+
+ちなみにgoのtarのURLはここから https://go.dev/dl/
+
+また、別途 `isucon` ユーザーの .profileでPATHを通す必要がある https://go.dev/doc/install
+
+
 ## ベンチマーカーの実行
 
 
