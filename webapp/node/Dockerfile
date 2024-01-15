@@ -13,10 +13,25 @@ RUN apt-get update &&\
     apt-get -y update && \
     apt-get -y install default-mysql-client pdns-server pdns-backend-mysql
 
+# forked-original: goランタイムを用意する
+RUN wget https://go.dev/dl/go1.21.6.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
+
+# forked-original: sudoを用意する
+RUN apt-get update && \
+    apt-get install -y sudo
+
 RUN rm -f /etc/powerdns/pdns.d/bind.conf
 
 RUN locale-gen en_US.UTF-8
 RUN useradd --uid=1001 --create-home isucon
+# forked-original: isucon ユーザーをパスワード付きユーザーにする
+RUN echo 'isucon:isucon' | chpasswd
+# forked-original: sudo権限を付与
+RUN echo 'isucon ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# forked-original: go PATHの設定をする
+RUN echo 'export PATH=$PATH:/usr/local/go/bin' >> /home/isucon/.bashrc
+
 USER isucon
 
 RUN mkdir -p /home/isucon/webapp/node
